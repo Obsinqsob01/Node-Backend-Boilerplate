@@ -1,11 +1,12 @@
 import Service from "./Service"
+import { HashPassword } from "../utils/HashPassword"
 
 class UserService extends Service {
     async insert(data) {
         try {
-            data.password_hash = data.password + "hola mundo"
+            data.password_hash = await HashPassword(data.password)
             
-            let item = await this.model.save(data)
+            let item = await this.model.create(data)
 
             return {
                 error: false,
