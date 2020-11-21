@@ -20,22 +20,8 @@ const mongoSchema = new Schema({
         type: String,
         required: true
     },
-    createdAt: {
-        type: Date,
-        required: true
-    },
-    updatedAt: {
-        type: Date,
-        required: true
-    }
+}, {
+    timestamps: true
 })
 
-class UserClass {
-    static async HashPassword(password) {
-        console.log(this, password)
-    }
-}
-
-mongoSchema.loadClass(UserClass)
-
-export const User = mongoose.Model('User', mongoSchema)
+export const User = mongoose.model('User', mongoSchema)
