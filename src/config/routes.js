@@ -1,9 +1,17 @@
 import UserRoutes from "./routes/UserRoutes"
+import express from "express"
+
+const router = express.Router()
 
 export default server => {
-    server.get('*', (req, res) => {
-        message: "Welcome to api"
-    })
 
-    server.use("/api/users", UserRoutes)
+    server.use("/api", router)
+
+    router.use("/users", UserRoutes)
+
+    server.use('*', (req, res) => {
+        return res.status(200).send({
+            "message": "Welcome to api my friend"
+        })
+    })
 }

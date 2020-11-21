@@ -1,9 +1,11 @@
 import UserController from "../../controllers/UserController"
-import { User } from "../../models/User"
+import express from "express"
 
-export default server => {
-    server.get("", UserController.getAll)
-    server.post("", UserController.insert)
-    server.put("/:id", UserController.update)
-    server.delete("/:id", UserController.delete)
-}
+const router = express.Router()
+
+router.get("", UserController.getAll)
+router.post("", UserController.insert)
+router.put("/:id", UserController.update)
+router.delete("/:id", UserController.delete)
+
+export default router
