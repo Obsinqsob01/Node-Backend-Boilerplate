@@ -13,5 +13,9 @@
     "mongodb"
   ],
   "author": "Luis Contreras Guerra",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.10.15"
+  }
 }
