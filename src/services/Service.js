@@ -1,15 +1,15 @@
 class Service {
     constructor(model) {
         this.model = model
-        this.findAll = this.findAll.bind(this)
+        this.getAll = this.getAll.bind(this)
         this.insert = this.insert.bind(this)
         this.update = this.update.bind(this)
         this.delete = this.delete.bind(this)
     }
 
-    async findAll() {
+    async getAll() {
         try {
-            let items = await this.model.all();
+            let items = await this.model.find();
             let total = await this.model.count();
 
             return {
@@ -22,14 +22,14 @@ class Service {
             return {
                 error: true,
                 statusCode: 500,
-                errors
+                errors: errors.toString()
             }
         }
     }
 
     async insert(data) {
         try {
-            let item = await this.model.save(data)
+            let item = await this.model.create(data)
 
             return {
                 error: false,
