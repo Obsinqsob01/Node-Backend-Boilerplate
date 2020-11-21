@@ -8,6 +8,14 @@
 - Express
 - Mongo
 
+## Prepare env
+Create .env file with follow structure
+```
+PORT=port where you want your app run
+KEY=key to sign jwt
+mongoURI=your string of connection to mongodb
+```
+
 ## Features
 
 - Users
@@ -15,5 +23,5 @@
 
 ## Task List
 
-- [] Tests
-- [] Improve folder structure
+- [ ] Tests
+- [ ] Improve folder structure
