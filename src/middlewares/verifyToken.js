@@ -15,7 +15,6 @@ export const verifyToken = async (req, res, next) => {
     
     return res.status(401).send({
         error: true,
-        errors: "Token should be in headers",
         message: "Token is not present on headers",
         statusCode: 401
     })
