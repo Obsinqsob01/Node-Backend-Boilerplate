@@ -1,6 +1,7 @@
 import Service from "./Service"
 import jwt from "jsonwebtoken"
 import { HashPassword, ComparePassword } from "../utils/HashPassword"
+import { generateJWT } from "../utils/GenerateJWT"
 
 class UserService extends Service {
     async insert(data) {
@@ -13,12 +14,11 @@ class UserService extends Service {
                 error: false,
                 item
             }
-        } catch(errors) {
+        } catch(error) {
             return {
                 error: true,
                 statusCode: 500,
-                message: errors.toString() || "Not able to create User",
-                errors
+                message: error.toString() || "Not able to create User",
             }
         }
     }
@@ -33,7 +33,6 @@ class UserService extends Service {
                 return {
                     error: true,
                     statusCode: 404,
-                    errors: "Not able to login",
                     message: "User not found"
                 }
             }
@@ -44,9 +43,7 @@ class UserService extends Service {
                     email,
                 }
 
-                const token = jwt.sign(payload, process.env.KEY, {
-                    expiresIn: 1440,
-                })
+                const token = generateJWT(payload)
                 
                 return {
                     token,
@@ -59,14 +56,12 @@ class UserService extends Service {
                 error: true,
                 statusCode: 401,
                 message: "Password is not valid",
-                errors: "Not be able to login at this time"
             }
-        } catch (errors) {
+        } catch (error) {
             return {
                 error: true,
                 statusCode: 500,
-                message: errors.toString() || "Not be able to login at this time",
-                errors
+                message: error.toString() || "Not be able to login at this time",
             }
         }
     }
