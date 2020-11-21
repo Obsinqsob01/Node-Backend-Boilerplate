@@ -9,16 +9,39 @@ class UserService extends Service {
             data.password_hash = await HashPassword(data.password)
             
             let item = await this.model.create(data)
+            let payload = {
+                id: item._id,
+                email: item.email
+            }
+
+            let token = generateJWT(payload)
 
             return {
                 error: false,
-                item
+                item,
+                token
             }
         } catch(error) {
+            let isMongoDuplicationError = error.code && error.code === 11000
+
+            if (error.name === 'ValidationError') {
+                let errors = [];
+                for (let field in error.errors) {
+                    errors.push(`${error.errors[field].path} is ${error.errors[field].kind}`)
+                }
+
+                return {
+                    message: "There are validation errors",
+                    errors,
+                    error: true,
+                    statusCode: 400,
+                }
+            }
+
             return {
                 error: true,
-                statusCode: 500,
-                message: error.toString() || "Not able to create User",
+                statusCode: isMongoDuplicationError? 409 : 500,
+                message: isMongoDuplicationError? "Email already been registered" : error.toString()
             }
         }
     }
