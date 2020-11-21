@@ -40,6 +40,7 @@ class UserService extends Service {
 
             if (await ComparePassword(password, user.password_hash)) {
                 const payload = {
+                    id: user._id,
                     email,
                 }
 

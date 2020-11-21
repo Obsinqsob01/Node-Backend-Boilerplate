@@ -10,7 +10,7 @@ class Service {
     async getAll() {
         try {
             let items = await this.model.find();
-            let total = await this.model.count();
+            let total = await this.model.countDocuments();
 
             return {
                 error: false,
@@ -47,18 +47,18 @@ class Service {
 
     async update(id, data) {
         try {
-            let item = await this.model.update(id, data)
+            let item = await this.model.findByIdAndUpdate(id, data)
     
             return {
                 error: false,
                 statusCode: 202,
                 item
             }
-        } catch(error) {
+        } catch(errors) {
               return {
                 error: true,
                 statusCode: 500,
-                errors: error
+                errors: errors.toString()
             }
         }
     }
