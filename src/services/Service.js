@@ -18,11 +18,11 @@ class Service {
                 data: items,
                 total
             }
-        } catch(errors) {
+        } catch(error) {
             return {
                 error: true,
                 statusCode: 500,
-                errors: errors.toString()
+                message: error.toString() || "Unable to fetch all items"
             }
         }
     }
@@ -35,12 +35,11 @@ class Service {
                 error: false,
                 item
             }
-        } catch(errors) {
+        } catch(error) {
             return {
                 error: true,
                 statusCode: 500,
-                message: errors.toString() || "Not able to create item",
-                errors
+                message: error.toString() || "Not able to create item",
             }
         }
     }
@@ -54,11 +53,11 @@ class Service {
                 statusCode: 202,
                 item
             }
-        } catch(errors) {
+        } catch(error) {
               return {
                 error: true,
                 statusCode: 500,
-                errors: errors.toString()
+                message: error.toString() || `Unable to update item with id ${id}`
             }
         }
     }
@@ -66,14 +65,15 @@ class Service {
     async delete(id) {
         try {
             return {
+                error: true,
                 statusCode: 401,
-                errors: `We cant delete item with id: ${id}` 
+                message: `We cant delete item with id: ${id}` 
             }
         } catch(error) {
             return {
                 error: true,
                 statusCode: 500,
-                errors: error
+                message: error.toString() || "Unable to delete item"
             }
         }
     }

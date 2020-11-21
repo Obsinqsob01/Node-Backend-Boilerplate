@@ -13,7 +13,7 @@ class Controller {
 
     async insert(req, res) {
         let response = await this.service.insert(req.body);
-        if (response.errors) return res.status(response.statusCode).send(response)
+        if (response.error) return res.status(response.statusCode).send(response)
 
         return res.status(201).send(response)
     }
